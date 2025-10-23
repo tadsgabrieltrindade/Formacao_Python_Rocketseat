@@ -58,6 +58,22 @@ def update_task(taskId):
     task.completed = data['completed']
     return jsonify({"msg": "Tarefa atualizada!"})
 
+
+
+@app.route("/tasks/<int:taskId>",  methods=["DELETE"])
+def delete_task(taskId):
+    task = None
+    for t in tasks:
+        if t.id == taskId:
+            task = t
+            break
+
+    if task == None:
+        return jsonify({"msg": "Tarefa não encontrada"})
+    
+    tasks.remove(task)
+    return jsonify({"msg": "Tarefa excluída com sucesso!"})
+
 @app.route("/user/<int:user_id>")
 def teste(user_id):
     print(user_id, type(user_id))
