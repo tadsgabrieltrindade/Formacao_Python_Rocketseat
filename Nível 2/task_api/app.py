@@ -42,6 +42,11 @@ def get_task(id):
     return jsonify(msg="Not found"), 404
 
 
+@app.route("/user/<int:user_id>")
+def teste(user_id):
+    print(user_id, type(user_id))
+    return "%s" % user_id
+
 
 if __name__ == "__main__":
     app.run(debug=True)
