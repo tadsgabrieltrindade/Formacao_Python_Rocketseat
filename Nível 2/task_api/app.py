@@ -18,7 +18,7 @@ def insert_task():
     tasks.append(task)
     
     task_id_control += 1
-    return jsonify({"message": "Nova tarefa criada com sucesso!"})
+    return jsonify({"message": "Nova tarefa criada com sucesso!", "id": task.id})
 
 
 @app.route("/tasks", methods=['GET'])
@@ -50,7 +50,7 @@ def update_task(taskId):
             task = t
 
     if task == None:
-        return jsonify({"msg": "Tarefa não encontrada"})
+        return jsonify({"msg": "Tarefa não encontrada"}), 404
     
     data = request.get_json()
     task.title = data['title']
