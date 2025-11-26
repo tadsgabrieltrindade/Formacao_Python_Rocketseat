@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from flask_login import LoginManager
+from flask_login import LoginManager, login_user, current_user
 from database import db
 from models.user import User
 
@@ -11,7 +11,12 @@ login_manager = LoginManager()
 db.init_app(app)
 login_manager.init_app(app)
 
-# @login_manager.user_loader
+login_manager.login_view = 'login'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
+
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
@@ -24,6 +29,8 @@ def login():
             user = User.query.filter_by(username=username).first()
 
             if user and user.password: 
+                login_user(user)
+                print(current_user.is_authenticated)
                 return jsonify({"message": "Usuário autenticado com sucesso!"}), 200
                 
         return jsonify({"message": "Credenciais inválidas!"}), 401 

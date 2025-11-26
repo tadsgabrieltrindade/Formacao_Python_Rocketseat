@@ -13,8 +13,8 @@ def test_status():
 
 def test_login():
     req_body = {
-        "username": "Gabriel Trindade",
-        "password": "Teste"
+        "username": "admin",
+        "password": "123"
     }
 
     response = requests.post(f"{BASE_URL}/login", json=req_body)
