@@ -29,3 +29,9 @@ def test_logout():
     response = session.post(f"{BASE_URL}/logout")
     
     assert response.status_code == 200
+
+def test_logout_without_session():
+    response = session.post(f"{BASE_URL}/logout")
+    
+    assert response.status_code == 405
+    
