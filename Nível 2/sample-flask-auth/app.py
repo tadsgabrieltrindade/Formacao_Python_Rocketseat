@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from flask_login import LoginManager, login_user, current_user
+from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 from database import db
 from models.user import User
 
@@ -37,6 +37,14 @@ def login():
     except:
         return jsonify({"message": "Erro ao processar login!"}), 500
         
+
+
+@app.route('/logout', methods=['POST'])
+@login_required
+def logout():
+    logout_user()
+    return jsonify({"message": "Lagout realizado com sucesso"}), 200
+
 
 with app.app_context():
     db.create_all()
