@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_login import LoginManager
 from database import db
+from models.user import User
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "my-secret-key-for-tests"
@@ -19,8 +20,12 @@ def login():
         password = data.get("password")
 
         if username and password:
-            return jsonify({"message": "Usuário autenticado com sucesso!"}), 200
+            #buscar login
+            user = User.query.filter_by(username=username).first()
 
+            if user and user.password: 
+                return jsonify({"message": "Usuário autenticado com sucesso!"}), 200
+                
         return jsonify({"message": "Credenciais inválidas!"}), 401 
     except:
         return jsonify({"message": "Erro ao processar login!"}), 500
