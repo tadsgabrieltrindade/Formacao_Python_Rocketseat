@@ -29,9 +29,9 @@ def login():
 with app.app_context():
     db.create_all()
 
-@app.route("/hello-world", methods=['GET'])
+@app.route("/", methods=['GET'])
 def hello_world():
-    return "Hello World"
+    return jsonify({"message": "API running"}), 200
 
 if  __name__ == '__main__':
     app.run(debug=True)
