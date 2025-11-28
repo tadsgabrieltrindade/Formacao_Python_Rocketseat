@@ -79,11 +79,34 @@ def test_get_user():
      assert "username" in response_json
 
      
+
+def test_update_senha():
+     #fazer o login
+     req_body_login = {
+        "username": "user_teste",
+        "password": "123"
+    }
+     session.post(f"{BASE_URL}/login", json=req_body_login)
+    
+     req_body_update = {
+        "password": "1234"
+    }
+     response = session.put(f"{BASE_URL}/user/1", json=req_body_update)
+
+     assert response.status_code == 200
+     
+     response_json = response.json()
+
+     assert response_json["message"] == "Senha do usuário atualizada com sucesso!"
+
+
+
+
 def test_delete_user():
     #fazer o login
      req_body_login = {
         "username": "user_teste",
-        "password": "123"
+        "password": "1234"
     }
      response = session.post(f"{BASE_URL}/login", json=req_body_login)
      

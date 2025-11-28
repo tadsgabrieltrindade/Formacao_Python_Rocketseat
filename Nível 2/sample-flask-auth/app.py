@@ -95,12 +95,26 @@ def get_user(user_id):
 
     return jsonify({"message": "Usuário não encontrado!"}), 404
 
+@app.route('/user/<int:user_id>', methods=["PUT"])
+@login_required
+def update_password(user_id):
+    data = request.json
+    user = User.query.get(user_id)
+
+    if user and data.get("password"):
+        user.password = data.get("password")
+        db.session.commit()
+        return jsonify({"message": "Senha do usuário atualizada com sucesso!"}), 200
+
+    return jsonify({"message": "Envie a senha por body da requisição!"}), 404
+
+
 
 with app.app_context():
     db.create_all()
 
 @app.route("/", methods=['GET'])
-def hello_world():
+def hello_world():              
     return jsonify({"message": "API running"}), 200
 
 if  __name__ == '__main__':
