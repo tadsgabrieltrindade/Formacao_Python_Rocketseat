@@ -85,6 +85,16 @@ def delete_user():
         return jsonify({"message": "Erro no servidor ao cadastrar usuário!"}), 500
 
 
+@app.route('/user/<int:user_id>', methods=["GET"])
+@login_required
+def get_user(user_id):
+    user = User.query.get(user_id)
+
+    if user:
+        return jsonify({"message": "Usuário encontrado!", "username": user.username}), 200
+
+    return jsonify({"message": "Usuário não encontrado!"}), 404
+
 
 with app.app_context():
     db.create_all()

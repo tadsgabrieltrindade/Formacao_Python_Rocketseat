@@ -64,7 +64,21 @@ def test_logout_without_session():
     
     assert response.status_code == 405
 
+def test_get_user():
+     #fazer o login
+     req_body_login = {
+        "username": "user_teste",
+        "password": "123"
+    }
+     session.post(f"{BASE_URL}/login", json=req_body_login)
+     
+     response = session.get(f"{BASE_URL}/user/1")
+     response_json = response.json()
 
+     assert response.status_code == 200
+     assert "username" in response_json
+
+     
 def test_delete_user():
     #fazer o login
      req_body_login = {
@@ -85,3 +99,6 @@ def test_delete_user():
      assert response_json["message"] == "Usuário removido com sucesso!"
 
      
+
+
+
