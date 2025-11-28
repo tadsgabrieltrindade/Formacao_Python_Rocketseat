@@ -75,7 +75,7 @@ def delete_user():
             user = User.query.filter_by(username=username).first()
 
             if user:
-                db.session.remove(user)
+                db.session.delete(user)
                 db.session.commit()
             return jsonify({"message": "Usuário removido com sucesso!"}), 200
         
